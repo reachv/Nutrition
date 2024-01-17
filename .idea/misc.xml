@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/reach/Desktop/android-samples-main/tutorials/Nutrition/app/src/main/res/layout/activity_login.xml" value="0.3098958333333333" />
         <entry key="..\:/Users/reach/Desktop/android-samples-main/tutorials/Nutrition/app/src/main/res/layout/activity_main.xml" value="0.5572916666666666" />
+        <entry key="..\:/Users/reach/Desktop/android-samples-main/tutorials/Nutrition/app/src/main/res/layout/activity_register.xml" value="0.3098958333333333" />
+        <entry key="..\:/Users/reach/Desktop/android-samples-main/tutorials/Nutrition/app/src/main/res/layout/fragment_curr.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/reach/Desktop/android-samples-main/tutorials/Nutrition/app/src/main/res/layout/fragment_prev.xml" value="0.3098958333333333" />
       </map>
     </option>
   </component>
