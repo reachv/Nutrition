@@ -7,10 +7,12 @@ import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 import com.example.nutrition.MainActivity
 import com.example.nutrition.R
 import com.parse.LogInCallback
 import com.parse.ParseUser
+import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +45,14 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         loginButton.setOnClickListener {
+            val usernamePattern : Pattern = Pattern.compile("[A-Za-z0-9]{5,24}")
+            if(!usernamePattern.matcher(loginUsername.text.toString()).matches()){
+                Toast.makeText(this, "Username must not contain symbols", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             ParseUser.logInInBackground(loginUsername.text.toString(), loginPassword.text.toString(), LogInCallback { user, e ->
                 if(e !=  null){
-                    Log.e("LoginActivity", "Line 35: " + e)
+                    Log.e("LoginActivity 55:", e.toString())
                     return@LogInCallback
                 }
                 if(loginCheck.isActivated){

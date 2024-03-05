@@ -58,41 +58,38 @@ class RegisterActivity : AppCompatActivity() {
     }
     //Verification
     private fun verifyUser(username : String, password : String, email : String) : Boolean{
-        var res : Boolean = true
-        if(!userVerif(username, email)){
-            res = false
-        }
-        if(!passwordVerif(password)){
-            res = false
-        }
-        return res;
-    }
-    private fun userVerif(username : String, email : String): Boolean {
         var res = true
-        val usernamePattern : Pattern = Pattern.compile("[A-Za-z0-9]*")
+        if(!userVerify(username, email) || !passwordVerify(password)){
+            res = false
+        }
+        return res
+    }
+    private fun userVerify(username : String, email : String): Boolean {
+        var res = true
+        val usernamePattern : Pattern = Pattern.compile("[A-Za-z0-9]{5,24}")
         if(!usernamePattern.matcher(username).matches()){
             Toast.makeText(this, "Username must be alphanumeric", Toast.LENGTH_SHORT).show()
             res = false
-        }
-        var userQuery = ParseUser.getQuery()
-        userQuery.findInBackground { objects, e ->
-            if (e != null) {
-                Log.e("Registery 78:", e.toString())
-                return@findInBackground
-            }
-            for (i in objects) {
-                if (i.username.equals(username)) {
-                    Toast.makeText(this, "Username already exist, Try again", Toast.LENGTH_SHORT)
-                        .show()
-                    res = false
-                    break
+        }else{
+            val userQuery = ParseUser.getQuery()
+            userQuery.findInBackground { objects, e ->
+                if (e != null) {
+                    Log.e("Registry 78:", e.toString())
+                    return@findInBackground
+                }
+                for (i in objects) {
+                    if (i.username.equals(username)) {
+                        Toast.makeText(this, "Username already exist, Try again", Toast.LENGTH_SHORT).show()
+                        res = false
+                        break
+                    }
                 }
             }
         }
         return res
     }
-    private fun passwordVerif(password : String) : Boolean{
-        val passwordPattern : Pattern = Pattern.compile("[a-zA-Z0-9\\!\\@\\#\\$]{8,24}")
+    private fun passwordVerify(password : String) : Boolean{
+        val passwordPattern : Pattern = Pattern.compile("[a-zA-Z0-9!@#$]{8,24}")
         return !password.isNullOrBlank() && passwordPattern.matcher(password).matches()
     }
 }
