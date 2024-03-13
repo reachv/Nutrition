@@ -1,5 +1,6 @@
 package com.example.nutrition.Fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,8 @@ import com.parse.Parse
 import com.parse.ParseQuery
 import com.parse.ParseUser
 import org.eazegraph.lib.charts.PieChart
+import org.eazegraph.lib.models.PieModel
+import java.util.Date
 
 
 class CurrFragment : Fragment() {
@@ -30,11 +33,11 @@ class CurrFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_curr, container, false)
         //Declarations
         var pieChart : PieChart = view.findViewById(R.id.currPiechart)
-        var currProtein : TextView = view.findViewById(R.id.currProtein)
-        var currCalories : TextView = view.findViewById(R.id.currCalories)
-        var currFats : TextView = view.findViewById(R.id.currFats)
-        var currCarbs : TextView = view.findViewById(R.id.currCarbs)
-        var currDay : Day
+        val currProtein : TextView = view.findViewById(R.id.currProtein)
+        val currCalories : TextView = view.findViewById(R.id.currCalories)
+        val currFats : TextView = view.findViewById(R.id.currFats)
+        val currCarbs : TextView = view.findViewById(R.id.currCarbs)
+        var currDate : TextView = view.findViewById(R.id.currDate)
 
         //QueryDays
         var query : ParseQuery<Day> = ParseQuery.getQuery("Day")
@@ -47,10 +50,39 @@ class CurrFragment : Fragment() {
             if(objects.size < 1){
 
             }else{
-                var prevDay : Day = objects[0]
+                val curr : Day = objects[0]
+                //TextView
+                currProtein.setText(curr.protein)
+                currCalories.setText(curr.calories)
+                currCarbs.setText(curr.carbs)
+                currFats.setText(curr.fats)
+                currDate.text = curr.createdAt.toString()
 
+                //PieChart
+                pieChart.addPieSlice(
+                    PieModel(
+                        "Protein",
+                        curr.protein.toFloat(),
+                        Color.parseColor("#FFA726")
+                    )
+                )
+                pieChart.addPieSlice(
+                    PieModel(
+                        "Carbs",
+                        curr.carbs.toFloat(),
+                        Color.parseColor("#FFA726")
+                    )
+                )
+                pieChart.addPieSlice(
+                    PieModel(
+                        "Fats",
+                        curr.fats.toFloat(),
+                        Color.parseColor("#FFA726")
+                    )
+                )
             }
         }
+
         // Inflate the layout for this fragment
         return view
     }
